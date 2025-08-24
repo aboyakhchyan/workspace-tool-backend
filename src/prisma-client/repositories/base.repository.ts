@@ -1,13 +1,12 @@
 import { IBaseRepository } from '@common/interfaces';
-import { PrismaClient } from '@prisma/client';
-
-type ModelName = keyof PrismaClient;
+import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClientService } from 'prisma-client/prisma-client.service';
 
 export abstract class BasePSQLRepository<T> implements IBaseRepository<T> {
-  protected readonly prisma: PrismaClient;
-  private readonly modelName: ModelName;
+  protected readonly prisma: PrismaClientService;
+  private readonly modelName: Prisma.ModelName;
 
-  constructor(prisma: PrismaClient, modelName: ModelName) {
+  constructor(prisma: PrismaClientService, modelName: Prisma.ModelName) {
     this.prisma = prisma;
     this.modelName = modelName;
   }

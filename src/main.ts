@@ -4,6 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { IApi, IClient } from '@common/interfaces';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
+import { AllExceptionFilter } from '@common/filters/all-exception.filter';
+import { setupSwagger } from '@common/configs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,8 +19,6 @@ async function bootstrap() {
     origin: [client],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    exposedHeaders: ['Set-Cookie', 'Content-Disposition'],
-    allowedHeaders: ['Authorization', 'X-Api-Key'],
   });
 
   app.setGlobalPrefix(api.prefix);
@@ -26,12 +26,15 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
-      transform: true
-    })
-  )
+      transform: true,
+    }),
+  );
+  // app.useGlobalFilters(new AllExceptionFilter());
+
+  setupSwagger(app);
 
   await app.listen(api.port, () => {
-    console.log(`Server runing in http://${api.host}:${api.port}`)
+    console.log(`Server runing in http://${api.host}:${api.port}`);
   });
 }
 bootstrap();
