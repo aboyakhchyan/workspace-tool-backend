@@ -11,7 +11,6 @@ Backend application for managing workspaces. Built with NestJS, Prisma, and Post
 - **Argon2** — password hashing
 - **Multer & Sharp** — file uploads and image processing
 - **Joi** — input validation
-- **RxJS** — reactive programming
 
 ## Project setup
 
