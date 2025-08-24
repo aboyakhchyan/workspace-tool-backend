@@ -29,7 +29,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  // app.useGlobalFilters(new AllExceptionFilter());
+  app.useGlobalFilters(new AllExceptionFilter());
 
   setupSwagger(app);
 
